@@ -26,6 +26,10 @@ class DataTablesHelper
      * @param callable $callback The callback function for the table.
      * @return void
      */
+    final public function set(string $tableId, callable $callback):void
+    {
+        $this->tables[$tableId] = $callback;
+    }
 
     /**
      * Process the request and return the table data as JSON.
