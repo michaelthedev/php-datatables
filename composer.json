@@ -1,0 +1,23 @@
+{
+  "name": "michaelthedev/php-datatables",
+  "description": "PHP Helper for Datatables",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Michael",
+      "email": "mycodemichael@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "Michaelthedev\\PhpDatatables\\": "src/"
+    }
+  }
+}
