@@ -14,6 +14,18 @@ namespace Michaelthedev\PhpDatatables;
 class DataTablesHelper
 {
     /**
+     * @var callable|null
+     * @since 0.2
+     */
+    private $notFoundCallback;
+
+    /**
+     * @var callable|null
+     * @since 0.2
+     */
+    private $customCallback;
+
+    /**
      * Store tables and callbacks
      * @var array
      */
@@ -32,6 +44,30 @@ class DataTablesHelper
     }
 
     /**
+     * Set a custom callback function.
+     *
+     * @param callable $callback The callback function.
+     * @return void
+     * @since 0.2
+     */
+    final public function setCustomCallback(callable $callback):void
+    {
+        $this->customCallback = $callback;
+    }
+
+    /**
+     * Set a callback function for when a table is not found.
+     *
+     * @param callable $callback The callback function.
+     * @return void
+     * @since 0.2
+     */
+    final public function setNotFoundCallback(callable $callback):void
+    {
+        $this->notFoundCallback = $callback;
+    }
+
+    /**
      * Process the request and return the table data as JSON.
      *
      * @param string $tableId The ID of the requested table.
@@ -43,20 +79,24 @@ class DataTablesHelper
             $callback = $this->tables[$tableId];
             $data = call_user_func($callback);
 
-            // Convert data to JSON
-            $jsonData = json_encode($data);
+            if (!is_null($this->customCallback)) {
+                call_user_func($this->customCallback, $tableId, $data);
+            } else {
+                // Convert data to JSON
+                $jsonData = json_encode($data);
 
-            // Return JSON response
-            header('Content-Type: application/json');
-            echo $jsonData;
-
-            //todo: custom `table callback` handler
+                // Return JSON response
+                header('Content-Type: application/json');
+                echo $jsonData;
+            }
         } else {
             // Table not found
-            http_response_code(404);
-            echo "Table not found";
-
-            //todo: custom `table not found` handler
+            if (!is_null($this->notFoundCallback)) {
+                call_user_func($this->notFoundCallback, $tableId);
+            } else {
+                http_response_code(404);
+                echo "Table not found";
+            }
         }
     }
 
