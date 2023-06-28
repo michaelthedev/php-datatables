@@ -6,6 +6,24 @@ use Michaelthedev\PhpDatatables\DataTablesHelper;
 // Create an instance of the DataTablesHelper class
 $helper = new DataTablesHelper();
 
+// Table not found callback
+$helper->setNotFoundCallback(function (string $tableId) {
+    http_response_code(404);
+    echo "Table `$tableId` not found";
+});
+
+// Custom callback
+$helper->setCustomCallback(function (string $tableId, array $data) {
+    // Do something with the data
+    header('Content-Type: application/json');
+    echo json_encode([
+        'draw' => 1,
+        'recordsTotal' => count($data),
+        'recordsFiltered' => count($data),
+        'data' => $data
+    ]);
+});
+
 // Set table callbacks
 $helper->set('employees', function () {
     // Your table data retrieval logic here
@@ -14,6 +32,19 @@ $helper->set('employees', function () {
         ['id' => 2, 'name' => 'Jane Smith', 'position' => 'Designer', 'salary' => 4500],
         ['id' => 3, 'name' => 'Mark Johnson', 'position' => 'Project Manager', 'salary' => 6000],
         // ...
+    ];
+});
+
+$data['draw'] = 1;
+$data['search']['value'] = '';
+$helper->set('allUsers', function () use ($data) {
+    return [
+        'draw' => $data['draw'],
+        'data' => [
+            ['id' => 1, 'name' => 'John Doe', 'position' => 'Developer', 'salary' => 5000],
+            ['id' => 2, 'name' => 'Jane Smith', 'position' => 'Designer', 'salary' => 4500],
+            ['id' => 3, 'name' => 'Mark Johnson', 'position' => 'Project Manager', 'salary' => 6000]
+        ]
     ];
 });
 
