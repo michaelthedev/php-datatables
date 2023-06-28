@@ -9,7 +9,7 @@ namespace Michaelthedev\PhpDatatables;
  * @category  Library
  * @package   Michaelthedev\PhpDatatables
  * @author    Michael Arawole <mycodemichael@gmail.com>
- * @version   0.1
+ * @version   0.2
  */
 class DataTablesHelper
 {
