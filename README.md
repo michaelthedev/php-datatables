@@ -17,8 +17,20 @@ _How to install._
    ```javascript
    composer require michaelthedev/php-datatables
    ```
-3. Include the generated autoload in your file, See index.php for example
+   Include the generated autoload in your file, See index.php for example
 
+
+2. If you prefer to include the DataTablesHelper file directly, you can follow these steps:
+
+Download the DataTablesHelper.php file from the GitHub repository.
+
+Include the DataTablesHelper file in your PHP file:
+
+```php
+require_once 'path/to/DataTablesHelper.php';
+
+use Michaelthedev\PhpDatatables\DataTablesHelper;
+```
 
 ## Usage
 
@@ -65,6 +77,8 @@ To use the DataTablesHelper class, follow these steps:
 
     This will return an array of table IDs that have been set.
 
+
+6. See index.php for full usage example
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
